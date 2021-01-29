@@ -1,0 +1,18 @@
+import os 
+def install(dirs):
+    os.system("pip install pygame")
+    os.system("pip install os")
+    os.mkdir(dirs)
+    with open(dirs+"main.py","w",encoding="utf-8") as md:
+        md.write('try:\n        import os\n        try:\n            import pygame  # pip install pygame\n        except ImportError:\n            select = input(\n               "电脑内缺失pygame模块,是否修复[y/n]:")\n            if select == "y" or select == "Y":\n                try:\n                    os.system("pip install pygame")\n                    print("修复成功")\n                except:\n                    print("修复失败,请联系18210062927")\n            if select == "n" or select == "N":\n                exit()\n        def get_listen_list():\n            lists = os.listdir("./播放列表")\n            if lists:\n                return["y",lists]\n            else:\n                return["n",lists]\n                \n        folders = os.path.exists("播放列表")\n        if not folders:\n            os.mkdir("播放列表")\n    # except:\n    #     pass\n        have, lists = get_listen_list()\n        if have == "y":\n            print("请选择播放列表内的音乐")\n            for num in range(0,len(lists)):\n                print(str(num+1)+"."+lists[num])\n            select_filename = input()\n            filename = lists[int(select_filename)-1]\n            filenames = "./播放列表/"+filename\n        else:\n            filenames = input("请输入音乐文件路径")\n        def playMusic(filename, replays, loops=0, start=0.0, value=0.5):\n            """\n            :param filename: 文件名\n            :param loops: 循环次数\n            :param start: 从多少秒开始播放\n            :param value: 设置播放的音量，音量value的范围为0.0到1.0\n            :return:\n            """\n            def player(filename, replays, loops=0, start=0.0, value=0.5):\n                flag = False  # 是否播放过\n                pygame.mixer.init()  # 音乐模块初始化\n                while 1:\n                    if flag == 0:\n                        pygame.mixer.music.load(filename)\n                        # pygame.mixer.music.play(loops=0, start=0.0) loops和start分别代表重复的次数和开始播放的位置。\n                        pygame.mixer.music.play(loops=loops, start=start)\n                        pygame.mixer.music.set_volume(value)  # 来设置播放的音量，音量value的范围为0.0到1.0。\n                    if pygame.mixer.music.get_busy() == True:\n                        flag = True\n                    else:\n                        if flag:\n                            pygame.mixer.music.stop()  # 停止播放\n                            break\n            if replays == "d":\n                while True:\n                    player(filename=filenames, replays="y")\n            else:\n                player(filename=filenames, replays="n")\n                replay()\n        def replay():\n            replay_cho = input("是否重播?[Y/N/D]")\n            if replay_cho == "Y" or replay_cho == "y":\n                playMusic(filename=filenames, replays="n")\n            elif replay_cho == "N" or replay_cho =="n":\n                print("感谢使用")\n                exit()\n            elif replay_cho == "D" or replay_cho == "D":\n                playMusic(filename=filenames, replays="d")\n        playMusic(filename=filenames, replays="n")\nexcept KeyboardInterrupt:\n   print("已终止操作")')
+    print("安装完毕")
+    os.system("python "+dirs+"main.py")
+
+print("----------------------")
+print("|欢迎使用播放器安装器|")
+print("|请问是否安装[y/n]---|")
+cho = input()
+if cho == "y" or cho == "Y":
+    install(dirs=r"D:/listener/")
+else:
+    exit()
